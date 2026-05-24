@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<!-- Quiz preview -->
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#D5D6E2">
+<title>Який формат роботи підходить тобі - 2-хвилинний квіз | Юлія Лайко</title>
+<meta name="description" content="5 питань - і ти бачиш, який з 3 форматів роботи зі мною підходить саме тобі. Без дзвінків-діагностик і продавальних тисків.">
+<meta name="robots" content="noindex,follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #D5D6E2;
+    --card: #FFFFFF;
+    --soft: #C7C8D6;
+    --ink: #1F1F2E;
+    --heading: #2D2D3A;
+    --muted: #8A8B98;
+    --accent: #E783DA;
+    --accent-soft: #F5C9EE;
+    --accent-deep: #D670C6;
+    --silver: #B8BCC8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    font-size: 17px;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  button { font-family: inherit; }
+  .container { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+  h1, h2, h3 { font-family: 'Manrope', system-ui, sans-serif; color: var(--heading); letter-spacing: -0.015em; }
+  h1 { font-weight: 800; line-height: 1.1; }
+  h2 { font-weight: 700; line-height: 1.2; }
+  h3 { font-weight: 700; line-height: 1.3; }
+  strong { font-weight: 700; color: var(--heading); }
+  em { font-style: italic; color: var(--accent-deep); }
+
+  /* === PROGRESS === */
+  .quiz-progress {
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(213,214,226,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 14px 0 12px;
+    border-bottom: 1px solid rgba(31,31,46,0.05);
+  }
+  .quiz-progress-bar {
+    height: 5px;
+    background: rgba(31,31,46,0.07);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+  .quiz-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent-deep) 100%);
+    border-radius: 100px;
+    width: 0%;
+    transition: width 700ms cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 0 10px rgba(231,131,218,0.5);
+  }
+  .quiz-progress-label {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.78rem; font-weight: 600;
+    color: var(--muted); text-align: center;
+    margin-top: 9px;
+    letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .quiz-progress-back {
+    position: absolute; left: 24px; top: 50%; transform: translateY(-50%);
+    background: transparent; border: none;
+    color: var(--muted); font-size: 0.88rem;
+    cursor: pointer; padding: 8px;
+    display: none;
+  }
+  .quiz-progress-back:hover { color: var(--accent-deep); }
+  .quiz-progress-back.show { display: inline-block; }
+
+  /* === SCREENS === */
+  .screens-wrap { padding: 50px 0 80px; min-height: calc(100vh - 80px); }
+  .screen { display: none; }
+  .screen.active {
+    display: block;
+    animation: screenIn 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes screenIn {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .screen-eyebrow {
+    display: inline-block;
+    background: var(--accent-soft); color: var(--accent-deep);
+    padding: 6px 14px; border-radius: 100px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.78rem; font-weight: 600;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .screen h1 { font-size: clamp(1.7rem, 4.5vw, 2.8rem); margin-bottom: 18px; }
+  .screen h2 { font-size: clamp(1.5rem, 3.8vw, 2.3rem); margin-bottom: 18px; }
+  .screen-desc {
+    font-size: 1.08rem; color: var(--ink); opacity: 0.85;
+    line-height: 1.65; margin-bottom: 16px;
+  }
+
+  /* === OPTIONS === */
+  .options { display: grid; gap: 12px; margin-top: 32px; }
+  .option {
+    background: var(--card);
+    border: 2px solid transparent;
+    border-radius: 16px;
+    padding: 20px 22px;
+    cursor: pointer;
+    transition: all 200ms ease;
+    text-align: left;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.02rem;
+    color: var(--ink);
+    line-height: 1.45;
+    display: flex; align-items: center; gap: 16px;
+    box-shadow: 0 2px 8px rgba(31,31,46,0.04);
+    width: 100%;
+  }
+  .option:hover {
+    border-color: var(--accent-soft);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(31,31,46,0.08);
+  }
+  .option.selected {
+    border-color: var(--accent);
+    background: linear-gradient(135deg, rgba(245,201,238,0.4) 0%, #FFFFFF 100%);
+    box-shadow: 0 4px 14px rgba(231,131,218,0.18);
+  }
+  .option-radio {
+    width: 22px; height: 22px;
+    border: 2px solid var(--silver);
+    border-radius: 50%;
+    flex-shrink: 0;
+    position: relative;
+    transition: all 200ms ease;
+  }
+  .option.selected .option-radio { border-color: var(--accent); }
+  .option.selected .option-radio::after {
+    content: ''; position: absolute;
+    inset: 3px; background: var(--accent); border-radius: 50%;
+    animation: radioPop 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes radioPop {
+    from { transform: scale(0); }
+    to { transform: scale(1); }
+  }
+
+  /* === BUTTONS (glass like main site) === */
+  .btn {
+    position: relative;
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 18px 36px;
+    background: linear-gradient(180deg, #F5A5E8 0%, #E783DA 50%, #D670C6 100%);
+    color: white;
+    font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 1.05rem;
+    text-decoration: none;
+    border-radius: 14px; border: none; cursor: pointer;
+    transition: transform 200ms ease, box-shadow 250ms ease, filter 250ms ease;
+    box-shadow:
+      0 4px 14px rgba(231,131,218,0.45),
+      0 12px 32px rgba(231,131,218,0.18),
+      inset 0 1px 0 rgba(255,255,255,0.55),
+      inset 0 -2px 0 rgba(110,30,90,0.18);
+    min-height: 52px;
+    overflow: hidden;
+    isolation: isolate;
+    text-shadow: 0 1px 1px rgba(110,30,90,0.25);
+  }
+  .btn::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.42) 0%, rgba(255,255,255,0.08) 45%, transparent 60%);
+    border-radius: inherit; pointer-events: none; z-index: 1;
+  }
+  .btn::after {
+    content: ''; position: absolute; top: 0; left: -75%;
+    width: 50%; height: 100%;
+    background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.45) 50%, transparent 100%);
+    transform: skewX(-20deg);
+    transition: left 700ms cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none; z-index: 2;
+  }
+  .btn > * { position: relative; z-index: 3; }
+  .btn:hover { transform: translateY(-2px); filter: brightness(1.05); }
+  .btn:hover::after { left: 125%; }
+  .btn-large { padding: 22px 48px; font-size: 1.15rem; min-height: 60px; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted);
+    border: 1.5px solid rgba(184,188,200,0.5);
+    padding: 14px 24px;
+    border-radius: 14px;
+    cursor: pointer;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 200ms ease;
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent-deep); background: rgba(245,201,238,0.2); }
+
+  .screen-nav {
+    margin-top: 36px;
+    display: flex; gap: 12px; align-items: center; justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* === INSIGHT === */
+  .insight {
+    background: linear-gradient(135deg, var(--accent-soft) 0%, var(--bg) 100%);
+    border-radius: 32px;
+    padding: 70px 50px;
+    text-align: center;
+    margin: 20px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .insight-icon {
+    font-size: 2.4rem;
+    margin-bottom: 12px;
+    display: inline-block;
+    width: 72px; height: 72px;
+    line-height: 72px;
+    background: rgba(255,255,255,0.7);
+    border-radius: 50%;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 18px rgba(231,131,218,0.18);
+  }
+  .insight h2 { max-width: 720px; margin: 18px auto 16px; }
+  .insight p {
+    font-size: 1.08rem;
+    color: var(--ink); opacity: 0.88;
+    line-height: 1.65;
+    max-width: 680px;
+    margin: 0 auto 14px;
+  }
+  .insight-stat {
+    display: inline-block;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(10px);
+    padding: 16px 28px;
+    border-radius: 16px;
+    margin: 20px 0 18px;
+    font-family: 'Manrope', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.7rem);
+    font-weight: 800;
+    color: var(--accent-deep);
+    box-shadow: 0 6px 20px rgba(231,131,218,0.18);
+    border: 1px solid rgba(255,255,255,0.7);
+  }
+  .insight-stat-label {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.78rem; font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+
+  /* === INTRO === */
+  .intro-wrap { text-align: center; padding: 40px 0; }
+  .intro-bullets {
+    display: grid; gap: 14px;
+    max-width: 480px;
+    margin: 32px auto;
+    text-align: left;
+  }
+  .intro-bullets li {
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(8px);
+    padding: 14px 20px;
+    border-radius: 14px;
+    list-style: none;
+    font-size: 1rem;
+    color: var(--ink);
+    display: flex; align-items: center; gap: 12px;
+    border: 1px solid rgba(255,255,255,0.5);
+  }
+  .intro-bullets li::before {
+    content: '✓'; color: var(--accent);
+    font-weight: 800; font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  /* === RESULT === */
+  .result-wrap { padding: 30px 0 60px; }
+  .result-banner {
+    position: relative;
+    background: linear-gradient(135deg, var(--accent-soft) 0%, var(--bg) 100%);
+    border-radius: 32px;
+    padding: 60px 40px;
+    text-align: center;
+    margin-bottom: 50px;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .result-sparkles {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    pointer-events: none; z-index: 0;
+  }
+  .result-banner > * { position: relative; z-index: 1; }
+  .result-eyebrow {
+    display: inline-block;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(8px);
+    color: var(--accent-deep);
+    padding: 8px 18px;
+    border-radius: 100px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.82rem; font-weight: 700;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    margin-bottom: 22px;
+    border: 1px solid rgba(255,255,255,0.6);
+    box-shadow: 0 2px 12px rgba(31,31,46,0.06);
+  }
+  .result-banner h1 { font-size: clamp(1.8rem, 4.2vw, 2.8rem); margin-bottom: 16px; }
+  .result-banner p {
+    color: var(--ink); opacity: 0.88;
+    max-width: 620px; margin: 0 auto;
+    font-size: 1.05rem; line-height: 1.65;
+  }
+  .result-summary {
+    margin: 32px auto 0;
+    max-width: 540px;
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(10px);
+    padding: 18px 22px;
+    border-radius: 14px;
+    text-align: left;
+    border: 1px solid rgba(255,255,255,0.7);
+  }
+  .result-summary-title {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.78rem; font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+  .result-summary p { font-size: 0.96rem; color: var(--ink); line-height: 1.55; opacity: 0.85; }
+
+  /* === TARIFFS === */
+  .tariffs-section { margin: 50px 0 0; }
+  .tariffs-section .section-title {
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .tariffs-section .section-desc {
+    text-align: center; color: var(--muted);
+    font-size: 1rem; margin-bottom: 40px;
+    max-width: 580px; margin-left: auto; margin-right: auto;
+  }
+  .tariffs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    margin-top: 24px;
+    align-items: stretch;
+  }
+  .tariff-card {
+    background: var(--card);
+    border-radius: 24px;
+    padding: 36px 28px 28px;
+    position: relative;
+    border: 2px solid rgba(199,200,214,0.4);
+    transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 2px 12px rgba(31,31,46,0.05);
+    display: flex; flex-direction: column;
+  }
+  .tariff-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(31,31,46,0.1); }
+  .tariff-card.recommended {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, #FFFFFF 0%, rgba(245,201,238,0.18) 100%);
+    box-shadow: 0 16px 40px rgba(231,131,218,0.22);
+    transform: translateY(-12px) scale(1.03);
+  }
+  .tariff-card.recommended:hover { transform: translateY(-16px) scale(1.03); }
+  .tariff-badge {
+    position: absolute;
+    top: -16px; left: 50%; transform: translateX(-50%);
+    background: linear-gradient(180deg, #F5A5E8 0%, #E783DA 50%, #D670C6 100%);
+    color: white;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.74rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 7px 18px;
+    border-radius: 100px;
+    box-shadow: 0 4px 18px rgba(231,131,218,0.4);
+    white-space: nowrap;
+    text-shadow: 0 1px 1px rgba(110,30,90,0.25);
+  }
+  .tariff-name {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700; font-size: 1.3rem;
+    margin-bottom: 8px; color: var(--heading);
+  }
+  .tariff-tagline {
+    font-size: 0.92rem;
+    color: var(--muted);
+    margin-bottom: 22px;
+    min-height: 50px;
+    line-height: 1.5;
+  }
+  .tariff-price-row {
+    display: flex; align-items: baseline; gap: 8px;
+    margin-bottom: 4px;
+  }
+  .tariff-price {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 800;
+    font-size: 2.3rem;
+    color: var(--accent-deep);
+    line-height: 1;
+  }
+  .tariff-price-cur {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--accent-deep);
+  }
+  .tariff-price-meta {
+    font-size: 0.83rem;
+    color: var(--muted);
+    margin-bottom: 22px;
+    line-height: 1.45;
+  }
+  .tariff-features {
+    list-style: none;
+    margin-bottom: 26px;
+    flex: 1;
+    border-top: 1px solid rgba(199,200,214,0.4);
+    padding-top: 20px;
+  }
+  .tariff-features li {
+    padding: 7px 0;
+    font-size: 0.93rem;
+    line-height: 1.5;
+    display: flex; align-items: flex-start; gap: 10px;
+    color: var(--ink); opacity: 0.92;
+  }
+  .tariff-features li::before {
+    content: '✓';
+    color: var(--accent);
+    font-weight: 800;
+    flex-shrink: 0;
+    line-height: 1.5;
+  }
+  .tariff-card .btn { width: 100%; padding: 16px 20px; font-size: 1rem; min-height: 50px; }
+  .tariff-card:not(.recommended) .btn {
+    background: var(--card);
+    color: var(--accent-deep);
+    border: 2px solid var(--accent-soft);
+    box-shadow: none;
+    text-shadow: none;
+  }
+  .tariff-card:not(.recommended) .btn::before { display: none; }
+  .tariff-card:not(.recommended) .btn:hover {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(231,131,218,0.18);
+  }
+
+  /* === GUARANTEE STRIP === */
+  .guarantee-strip {
+    margin: 50px 0 30px;
+    background: var(--card);
+    border-radius: 24px;
+    padding: 36px 32px;
+    display: flex; gap: 24px; align-items: center;
+    box-shadow: 0 2px 12px rgba(31,31,46,0.05);
+  }
+  .guarantee-strip-icon {
+    width: 64px; height: 64px;
+    background: linear-gradient(135deg, var(--accent-soft) 0%, var(--accent) 100%);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 1.8rem; font-weight: 800;
+    box-shadow: 0 6px 18px rgba(231,131,218,0.3);
+    flex-shrink: 0;
+  }
+  .guarantee-strip h3 { font-size: 1.15rem; margin-bottom: 6px; }
+  .guarantee-strip p { font-size: 0.95rem; color: var(--ink); opacity: 0.82; line-height: 1.55; }
+
+  .footer-quiz {
+    text-align: center;
+    padding: 40px 0;
+    color: var(--muted);
+    font-size: 0.88rem;
+  }
+  .footer-quiz a { color: var(--accent-deep); text-decoration: none; }
+
+  /* === MOBILE === */
+  @media (max-width: 900px) {
+    .tariffs-grid { grid-template-columns: 1fr; gap: 32px; }
+    .tariff-card.recommended { transform: none; }
+    .tariff-card.recommended:hover { transform: translateY(-4px); }
+  }
+  @media (max-width: 768px) {
+    body { font-size: 16px; }
+    .container { padding: 0 18px; }
+    .quiz-progress-back { left: 16px; font-size: 0.82rem; }
+    .screens-wrap { padding: 30px 0 60px; }
+    .insight { padding: 50px 24px; border-radius: 24px; }
+    .result-banner { padding: 50px 24px; border-radius: 24px; }
+    .option { padding: 16px 18px; font-size: 0.97rem; gap: 12px; }
+    .guarantee-strip { flex-direction: column; text-align: center; padding: 30px 22px; }
+  }
+  @media (max-width: 480px) {
+    .btn, .btn-large { width: 100%; }
+    .btn-large { padding: 18px 28px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="quiz-progress">
+  <div class="container" style="position: relative;">
+    <button class="quiz-progress-back" id="backBtn">← Назад</button>
+    <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="progressFill"></div></div>
+    <div class="quiz-progress-label" id="progressLabel">Початок</div>
+  </div>
+</header>
+
+<main class="screens-wrap">
+  <div class="container">
+
+    <!-- ============ SCREEN 0: INTRO ============ -->
+    <section class="screen active" data-screen="intro">
+      <div class="intro-wrap">
+        <span class="screen-eyebrow">Хелоу 👋</span>
+        <h1>За 2 хвилини бачиш, який формат роботи зі мною підходить саме тобі.</h1>
+        <p class="screen-desc" style="max-width: 580px; margin: 0 auto;">
+          5 питань. Без обов'язкової реєстрації. На виході - персональна рекомендація: <strong>Самостійний / VIP-День / Спринт 21 день</strong>.
+        </p>
+        <ul class="intro-bullets">
+          <li>Без дзвінків-діагностик і продавальних тисків</li>
+          <li>Чесна порада - навіть якщо мій формат тобі не підходить</li>
+          <li>В кінці бачиш ціни і можеш одразу оплатити</li>
+        </ul>
+        <div class="screen-nav">
+          <button class="btn btn-large" data-next><span>Поїхали →</span></button>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--muted); margin-top: 18px;">2 хвилини · 5 питань · 0 спаму</p>
+      </div>
+    </section>
+
+    <!-- ============ SCREEN 1: Q1 - ПОТОЧНА СИТУАЦІЯ ============ -->
+    <section class="screen" data-screen="q1" data-question="situation">
+      <span class="screen-eyebrow">Питання 1 з 5</span>
+      <h2>Де ти зараз?</h2>
+      <p class="screen-desc">Один варіант, що найточніше описує твою точку зараз.</p>
+      <div class="options">
+        <button class="option" data-value="stuck"><span class="option-radio"></span><span><strong>Бізнес є, але я в ступорі.</strong> Дохід нестабільний, аудиторія вижата, не розумію куди рухатись</span></button>
+        <button class="option" data-value="plateau"><span class="option-radio"></span><span><strong>Бізнес стабільний, але я застрягла на одному рівні.</strong> Хочу масштабувати, не знаю як</span></button>
+        <button class="option" data-value="growth"><span class="option-radio"></span><span><strong>Бізнес росте, мені треба х2-х5 за пів року.</strong> Готова інвестувати в систему</span></button>
+        <button class="option" data-value="new"><span class="option-radio"></span><span><strong>У мене є експертиза/проєкт, але немає продуктової лінійки.</strong> Хочу побудувати все правильно з нуля</span></button>
+      </div>
+    </section>
+
+    <!-- ============ SCREEN 2: INSIGHT #1 ============ -->
+    <section class="screen" data-screen="i1">
+      <div class="insight">
+        <div class="insight-icon">🎯</div>
+        <h2>Те, що ти зараз обрала - це не унікальне</h2>
+        <div class="insight-stat-label">Реальність ринку</div>
+        <div class="insight-stat">75%</div>
+        <p>Експерток на твоєму рівні застрягають <strong>не тому що у них поганий продукт</strong>. А тому, що у них немає <strong>впровадженої маркетингової системи</strong> - від позиціонування до воронки.</p>
+        <p style="margin-top: 20px;"><em>Хороша новина:</em> це лагодиться за дні, не за роки. І точно не курсами.</p>
+        <div class="screen-nav">
+          <button class="btn" data-next><span>Далі →</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SCREEN 3: Q2 - ЧАС ============ -->
+    <section class="screen" data-screen="q2" data-question="time">
+      <span class="screen-eyebrow">Питання 2 з 5</span>
+      <h2>Скільки часу на тиждень ти витрачаєш на маркетинг?</h2>
+      <p class="screen-desc">Контент, сторіс, відповіді, ідеї, аналітика - все разом.</p>
+      <div class="options">
+        <button class="option" data-value="exhausted"><span class="option-radio"></span><span><strong>15+ годин/тиждень.</strong> Виснажуюсь, але результат непропорційний</span></button>
+        <button class="option" data-value="chaotic"><span class="option-radio"></span><span><strong>5-10 годин.</strong> Стараюсь, але дуже хаотично - то на одне, то на інше</span></button>
+        <button class="option" data-value="lacking"><span class="option-radio"></span><span><strong>Менше 5 годин.</strong> Взагалі не встигаю, маркетинг провисає</span></button>
+        <button class="option" data-value="unknown"><span class="option-radio"></span><span><strong>Чесно не рахувала.</strong> Здається забагато, але точно не знаю</span></button>
+      </div>
+    </section>
+
+    <!-- ============ SCREEN 4: INSIGHT #2 (шок-число) ============ -->
+    <section class="screen" data-screen="i2">
+      <div class="insight">
+        <div class="insight-icon">💸</div>
+        <div class="insight-stat-label">Скільки ти недозаробляєш</div>
+        <div class="insight-stat" id="undermoneyStat">$1 800 / міс</div>
+        <h2>Це твоя «прихована вартість» хаосу в маркетингу</h2>
+        <p>Експертки, що працюють <strong>без впровадженої системи</strong>, недозаробляють у середньому <strong>$1 200 - 2 400 на місяць</strong>. Це не «нерозкритий потенціал». Це гроші, які <strong>вже могли б бути в тебе</strong> якби маркетинг працював системно.</p>
+        <p style="margin-top: 18px;"><em>Із маркетингом від нейронок</em> ти зможеш більше часу приділяти роботі з клієнтами замість їх пошуку - і дозаробляти ці <strong>$1 200 - 2 400 на місяць</strong>, що зараз губляться в хаосі.</p>
+        <div class="screen-nav">
+          <button class="btn" data-next><span>Далі →</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SCREEN 5: Q3 - AI ============ -->
+    <section class="screen" data-screen="q3" data-question="ai">
+      <span class="screen-eyebrow">Питання 3 з 5</span>
+      <h2>Як ти зараз працюєш з AI?</h2>
+      <p class="screen-desc">Чесно, без «правильних» відповідей.</p>
+      <div class="options">
+        <button class="option" data-value="gpt-disappointed"><span class="option-radio"></span><span>Іноді відкриваю ChatGPT, але він видає <strong>пластикову кашу</strong>. Редагую довше, ніж писала б сама</span></button>
+        <button class="option" data-value="none"><span class="option-radio"></span><span>Взагалі не використовую. Не знаю звідки почати, лякає</span></button>
+        <button class="option" data-value="regular"><span class="option-radio"></span><span>Використовую регулярно (ChatGPT або Claude). Але <strong>системи немає</strong></span></button>
+        <button class="option" data-value="claude"><span class="option-radio"></span><span>Вже працюю у <strong>Claude</strong> і бачу різницю. Хочу збудувати систему промптів і асистентів</span></button>
+      </div>
+    </section>
+
+    <!-- ============ SCREEN 6: INSIGHT #3 (Claude vs GPT) ============ -->
+    <section class="screen" data-screen="i3">
+      <div class="insight">
+        <div class="insight-icon">🚀</div>
+        <div class="insight-stat-label">Експертів ринку, що працюють у Claude</div>
+        <div class="insight-stat">~2%</div>
+        <h2>Цей розрив - <em>твоя</em> можливість</h2>
+        <p>Не важливо, у яких ти стосунках з AI зараз. <strong>GPT</strong> - це покоління 2022 року, через що видає пластмасу, яку довше редагувати, ніж писати самій. <strong>Claude</strong> - інше покоління моделі: тримає контекст, не вигадує фактів, говорить твоїм голосом.</p>
+        <p style="margin-top: 16px;">Кастомний асистент під твій TOV у Claude економить <strong>10+ годин на тиждень</strong> на контенті, ідеях і аналітиці. Старт однаковий - і для тих, хто вже у Claude, і для тих, хто ще не торкався AI.</p>
+        <div class="screen-nav">
+          <button class="btn" data-next><span>Далі →</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SCREEN 7: Q4 - ТЕМП ============ -->
+    <section class="screen" data-screen="q4" data-question="pace">
+      <span class="screen-eyebrow">Питання 4 з 5</span>
+      <h2>Який темп тобі заходить найбільше?</h2>
+      <p class="screen-desc">Це найважливіше питання для рекомендації формату.</p>
+      <div class="options">
+        <button class="option" data-value="intensive"><span class="option-radio"></span><span><strong>21 день глибокої роботи разом.</strong> 3 сесії, детальне впровадження, кожна частина системи проробляється з мною</span></button>
+        <button class="option" data-value="oneday"><span class="option-radio"></span><span><strong>1 день максимуму, далі впроваджую сама.</strong> 3 години зі мною, чіткий план, далі діємо</span></button>
+        <button class="option" data-value="selfpaced"><span class="option-radio"></span><span><strong>Сама, з гайдами і AI-асистентами.</strong> Маю час і енергію розібратись, потрібен матеріал і інструменти</span></button>
+        <button class="option" data-value="undecided"><span class="option-radio"></span><span><strong>Ще не знаю.</strong> Хочу побачити варіанти і порівняти</span></button>
+      </div>
+    </section>
+
+    <!-- ============ SCREEN 8: Q5 - БЮДЖЕТ ============ -->
+    <section class="screen" data-screen="q5" data-question="budget">
+      <span class="screen-eyebrow">Питання 5 з 5</span>
+      <h2>Як з готовністю інвестувати?</h2>
+      <p class="screen-desc">Без правильної відповіді. Просто чесно - щоб я порекомендувала формат під твою ситуацію.</p>
+      <div class="options">
+        <button class="option" data-value="high"><span class="option-radio"></span><span><strong>Інвестую максимум зараз</strong> - хочу швидкий результат і готова заплатити за нього</span></button>
+        <button class="option" data-value="medium-installments"><span class="option-radio"></span><span><strong>Готова інвестувати, але через оплату частинами.</strong> Можу розтягнути на 3-6 місяців</span></button>
+        <button class="option" data-value="low"><span class="option-radio"></span><span><strong>Поки не готова велику суму.</strong> Хочу почати з малого і подивитись</span></button>
+        <button class="option" data-value="explore"><span class="option-radio"></span><span><strong>Просто хочу побачити варіанти.</strong> Рішення прийму на основі того, що отримаю в кожному</span></button>
+      </div>
+    </section>
+
+    <!-- ============ SCREEN 9: PRE-RESULT TRANSITION ============ -->
+    <section class="screen" data-screen="prep">
+      <div class="insight">
+        <div class="insight-icon">✨</div>
+        <h2>Ти пройшла квіз. Ось що я бачу</h2>
+        <p>На основі твоїх відповідей я знаю <strong>точно</strong>: що тебе тримає, що готова інвестувати і який темп тобі підходить. Зараз покажу персональну рекомендацію - який з 3 форматів зайде саме тобі.</p>
+        <p style="margin-top: 18px;"><em>Якщо рекомендований не підійде</em> - усі 3 формати будуть доступні. Вибираєш свій.</p>
+        <div class="screen-nav">
+          <button class="btn btn-large" id="showResultBtn"><span>Показати результат →</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SCREEN 10: RESULT + TARIFFS ============ -->
+    <section class="screen" data-screen="result">
+      <div class="result-wrap">
+
+        <div class="result-banner">
+          <canvas class="result-sparkles" id="resultSparkles" aria-hidden="true"></canvas>
+          <span class="result-eyebrow" id="resultEyebrow">Твоя персональна рекомендація</span>
+          <h1 id="resultTitle">Завантажую...</h1>
+          <p id="resultDesc">Аналізую твої відповіді...</p>
+          <div class="result-summary">
+            <div class="result-summary-title">Що я почула від тебе</div>
+            <p id="resultSummary"></p>
+          </div>
+        </div>
+
+        <div class="tariffs-section">
+          <h2 class="section-title">Обери свій формат роботи</h2>
+          <p class="section-desc">Рекомендований виділено. Всі 3 - твоя система маркетингу від хаосу до стабільних продажів.</p>
+          <div class="tariffs-grid" id="tariffsGrid">
+            <!-- 3 tariff cards inserted via JS in order, recommended first or middle -->
+          </div>
+        </div>
+
+        <div class="guarantee-strip">
+          <div class="guarantee-strip-icon">✓</div>
+          <div>
+            <h3>Гарантія результату, а не повернення грошей</h3>
+            <p>Якщо за 1 місяць після впровадження нема сдвигу - <strong>безкоштовна додаткова сесія 1.5 години</strong>, щоб разом розібрати, де зламалось.</p>
+          </div>
+        </div>
+
+        <p style="text-align: center; color: var(--muted); font-size: 0.9rem; margin-top: 30px;">
+          Не впевнена? <a href="https://t.me/julylay" target="_blank" rel="noopener" style="color: var(--accent-deep); text-decoration: none; font-weight: 600;">Напиши мені в Telegram</a> - дам чесну пораду без продавальних тисків.
+        </p>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="footer-quiz">
+  © 2026 Юлія Лайко · <a href="index.html">На лендинг</a> · <a href="dogovir-oferty.html" target="_blank">Договір оферти</a>
+</footer>
+
+<script>
+// ============ QUIZ STATE ============
+const SCREENS = ['intro', 'q1', 'i1', 'q2', 'i2', 'q3', 'i3', 'q4', 'q5', 'prep', 'result'];
+const QUESTION_SCREENS = ['q1', 'q2', 'q3', 'q4', 'q5'];
+const state = {
+  current: 0,
+  answers: {},
+  history: [0]
+};
+
+// ============ TARIFFS DATA ============
+const BONUSES = [
+  '🎁 Закритий Telegram-канал з фішками AI для маркетингу і життя',
+  '🎁 10 AI-асистентів для Claude - ресьорч, воронки, контент'
+];
+
+const TARIFFS = {
+  self: {
+    id: 'self',
+    name: 'Самостійний',
+    tagline: 'Запис моєї VIP-сесії з клієнткою, яка має такий само запит, як у тебе. Без живої роботи зі мною.',
+    price: '$150',
+    priceMeta: 'оплата частинами до року',
+    features: [
+      'Сесія в записі з усіма інструкціями і промтами',
+      'Notion-простір з усім необхідним для самостійного впровадження AI в твій маркетинг',
+      ...BONUSES,
+    ],
+    cta: 'Беру Самостійний',
+    payUrl: 'https://secure.wayforpay.com/payment/sf0cb8c9852f2'
+  },
+  vip: {
+    id: 'vip',
+    name: 'VIP-День',
+    tagline: '3 години живої роботи 1-на-1 + 2 тижні підтримки впровадження.',
+    price: '$400',
+    priceMeta: 'оплата частинами до року',
+    features: [
+      '3-годинна сесія зі мною',
+      'Повний стек матеріалів - карта ЦА, оффер, продуктова матриця, контент-план',
+      'Кастомний AI-асистент для контенту у Claude під твій голос',
+      'Запис нашої сесії, гайд і всі промти у Notion, щоб можна було повторити шлях самостійно',
+      'Побудована воронка і контентні кути',
+      '<strong>2 тижні підтримки</strong> при допрацюванні і впровадженні',
+      '<em>АБО робота за чітким твоїм запитом</em> - створення AI-асистентів, побудова сайту, контент-завод, будь-що',
+      ...BONUSES,
+    ],
+    cta: 'Забронювати VIP-День',
+    payUrl: 'https://secure.wayforpay.com/payment/sf0cb8c9852f2'
+  },
+  sprint: {
+    id: 'sprint',
+    name: 'Спринт 21 день',
+    tagline: '3 глибокі сесії × детальна робота над усіма точками бізнесу + 1 місяць підтримки.',
+    price: '$800',
+    priceMeta: 'оплата частинами до року',
+    features: [
+      '3 живі сесії - стратегія, продукт, воронка',
+      'Все, що у VIP-Дні (матеріали, AI-асистент, промпти, воронка)',
+      'Детальна пропрацювання кожного кроку до працюючого маркетингу',
+      'Адаптація під твою нішу і твій темп',
+      '<strong>1 місяць</strong> підтримки у впровадженні після останньої сесії',
+      ...BONUSES,
+    ],
+    cta: 'Почати Спринт',
+    payUrl: 'https://secure.wayforpay.com/payment/sf0cb8c9852f2'
+  }
+};
+
+// ============ NAVIGATION ============
+const screensEls = document.querySelectorAll('.screen');
+const progressFill = document.getElementById('progressFill');
+const progressLabel = document.getElementById('progressLabel');
+const backBtn = document.getElementById('backBtn');
+
+function showScreen(index) {
+  state.current = index;
+  screensEls.forEach((el, i) => el.classList.toggle('active', i === index));
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Show back button if not on intro/result
+  const screenId = SCREENS[index];
+  backBtn.classList.toggle('show', index > 0 && screenId !== 'result');
+}
+
+function updateProgress() {
+  const screenId = SCREENS[state.current];
+  // Map progress: intro = 0, result = 100, questions and insights between
+  const totalSteps = SCREENS.length - 1; // exclude intro from progress base
+  const pct = (state.current / totalSteps) * 100;
+  progressFill.style.width = pct + '%';
+
+  // Label
+  if (screenId === 'intro') progressLabel.textContent = 'Початок';
+  else if (screenId === 'result') progressLabel.textContent = 'Готово ✨';
+  else if (QUESTION_SCREENS.includes(screenId)) {
+    const qNum = QUESTION_SCREENS.indexOf(screenId) + 1;
+    progressLabel.textContent = `Питання ${qNum} з 5`;
+  } else if (screenId === 'prep') progressLabel.textContent = 'Майже все';
+  else progressLabel.textContent = 'Інсайт';
+}
+
+function next() {
+  if (state.current < SCREENS.length - 1) {
+    const newIdx = state.current + 1;
+    state.history.push(newIdx);
+    if (SCREENS[newIdx] === 'result') renderResult();
+    showScreen(newIdx);
+  }
+}
+
+function back() {
+  if (state.history.length > 1) {
+    state.history.pop();
+    showScreen(state.history[state.history.length - 1]);
+  }
+}
+
+backBtn.addEventListener('click', back);
+
+// ============ OPTION SELECTION ============
+document.querySelectorAll('.screen[data-question]').forEach(screen => {
+  const questionKey = screen.dataset.question;
+  screen.querySelectorAll('.option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      // visual select
+      screen.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      // save
+      state.answers[questionKey] = opt.dataset.value;
+      // auto-advance after 450ms
+      setTimeout(next, 450);
+    });
+  });
+});
+
+// ============ NEXT BUTTONS (insights/intro) ============
+document.querySelectorAll('[data-next]').forEach(btn => {
+  btn.addEventListener('click', next);
+});
+
+document.getElementById('showResultBtn').addEventListener('click', next);
+
+// ============ RECOMMENDATION LOGIC ============
+function recommendTariff() {
+  const a = state.answers;
+  // Pace (q4) is primary signal
+  if (a.pace === 'intensive') return 'sprint';
+  if (a.pace === 'oneday') return 'vip';
+  if (a.pace === 'selfpaced') return 'self';
+  // pace=undecided → use budget + situation
+  if (a.budget === 'high' && (a.situation === 'growth' || a.situation === 'plateau')) return 'sprint';
+  if (a.budget === 'low' || a.budget === 'explore') return 'self';
+  if (a.budget === 'medium-installments') return 'vip';
+  // fallback
+  return 'vip';
+}
+
+function buildResultSummary() {
+  const a = state.answers;
+  const parts = [];
+  // situation
+  const situationMap = {
+    stuck: 'у тебе бізнес у ступорі',
+    plateau: 'ти застрягла на одному рівні і хочеш масштабуватись',
+    growth: 'твій бізнес росте, ти готова інвестувати в х2-х5',
+    new: 'у тебе є експертиза, але треба побудувати продуктову лінійку'
+  };
+  if (situationMap[a.situation]) parts.push(situationMap[a.situation]);
+  // time
+  const timeMap = {
+    exhausted: 'витрачаєш 15+ год/тиждень на маркетинг і виснажуєшся',
+    chaotic: 'працюєш хаотично',
+    lacking: 'не встигаєш на маркетинг',
+    unknown: 'не відстежуєш час на маркетинг'
+  };
+  if (timeMap[a.time]) parts.push(timeMap[a.time]);
+  // ai
+  const aiMap = {
+    'gpt-disappointed': 'розчарована у ChatGPT',
+    'none': 'не використовуєш AI',
+    'regular': 'вже використовуєш AI, але без системи',
+    'claude': 'вже у Claude і хочеш збудувати асистентів'
+  };
+  if (aiMap[a.ai]) parts.push(aiMap[a.ai]);
+  return parts.map(p => p.charAt(0).toUpperCase() + p.slice(1)).join(' · ') + '.';
+}
+
+function buildResultTitleDesc(tariffId) {
+  const a = state.answers;
+  if (tariffId === 'sprint') {
+    return {
+      title: 'Тобі підходить Спринт 21 день',
+      desc: 'Ти готова інтенсивно працювати і хочеш закрити всі точки бізнесу разом зі мною. За 21 день у тебе буде повністю впроваджена маркетингова система і час, щоб встигнути все обкатати з моєю підтримкою.'
+    };
+  }
+  if (tariffId === 'vip') {
+    return {
+      title: 'Тобі підходить VIP-День',
+      desc: 'Тобі не потрібен курс і не потрібен 21 день. Тобі потрібен 1 глибокий день, коли ми разом збираємо всю систему - а далі ти впроваджуєш з моєю підтримкою 1 місяць.'
+    };
+  }
+  // self
+  return {
+    title: 'Тобі підходить Самостійний',
+    desc: 'У тебе є час, енергія і бажання розібратись самій. Ти отримаєш записи моїх живих сесій, гайди по AI і 10 AI-асистентів, з якими робиш все під свій бізнес у власному темпі.'
+  };
+}
+
+function renderTariffCards(recommended) {
+  // order: self, vip, sprint (по вартості, зліва направо)
+  const order = ['self', 'vip', 'sprint'];
+  const grid = document.getElementById('tariffsGrid');
+  grid.innerHTML = '';
+  order.forEach(id => {
+    const t = TARIFFS[id];
+    const isRec = id === recommended;
+    const card = document.createElement('div');
+    card.className = 'tariff-card' + (isRec ? ' recommended' : '');
+    card.innerHTML = `
+      ${isRec ? '<span class="tariff-badge">★ Рекомендуємо тобі</span>' : ''}
+      <div class="tariff-name">${t.name}</div>
+      <div class="tariff-tagline">${t.tagline}</div>
+      <div class="tariff-price-row">
+        <span class="tariff-price">${t.price}</span>
+      </div>
+      <div class="tariff-price-meta">${t.priceMeta}</div>
+      <ul class="tariff-features">
+        ${t.features.map(f => `<li>${f}</li>`).join('')}
+      </ul>
+      <a href="${t.payUrl}" target="_blank" rel="noopener" class="btn"><span>${t.cta}</span></a>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function renderResult() {
+  const recommended = recommendTariff();
+  const { title, desc } = buildResultTitleDesc(recommended);
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('resultDesc').textContent = desc;
+  document.getElementById('resultSummary').textContent = buildResultSummary();
+  renderTariffCards(recommended);
+  // Update shock-stat for i2 based on time answer (already shown earlier, but in case user goes back)
+  startResultSparkles();
+}
+
+// ============ SHOCK-STAT (dynamic, based on Q2 answer) ============
+function updateShockStat() {
+  const t = state.answers.time;
+  const map = {
+    exhausted: '$2 400 / міс',
+    chaotic: '$1 800 / міс',
+    lacking: '$1 200 / міс',
+    unknown: '$1 800 / міс'
+  };
+  const el = document.getElementById('undermoneyStat');
+  if (el && map[t]) el.textContent = map[t];
+}
+// Hook: update right when entering i2 screen
+const observer = new MutationObserver(() => {
+  const activeEl = document.querySelector('.screen.active');
+  if (activeEl && activeEl.dataset.screen === 'i2') updateShockStat();
+});
+observer.observe(document.querySelector('.screens-wrap'), { attributes: true, subtree: true, attributeFilter: ['class'] });
+
+// ============ SPARKLES (result screen) ============
+function initSparkles(canvas) {
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  let w = 0, h = 0;
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const COLORS = ['255,255,255', '231,131,218', '245,201,238', '214,112,198'];
+
+  function resize() {
+    const rect = canvas.getBoundingClientRect();
+    w = rect.width; h = rect.height;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const count = Math.max(50, Math.floor(w * h * 0.0002));
+    particles = [];
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        size: Math.random() * 1.7 + 0.4,
+        speed: Math.random() * 0.4 + 0.05,
+        drift: (Math.random() - 0.5) * 0.18,
+        opacity: Math.random() * 0.7 + 0.2,
+        opacityDir: Math.random() > 0.5 ? 1 : -1,
+        opacitySpeed: Math.random() * 0.014 + 0.004,
+        color: COLORS[Math.floor(Math.random() * COLORS.length)],
+      });
+    }
+  }
+
+  function frame() {
+    ctx.clearRect(0, 0, w, h);
+    for (const p of particles) {
+      p.y -= p.speed; p.x += p.drift;
+      if (p.y < -4) { p.y = h + 4; p.x = Math.random() * w; }
+      if (p.x < -4) p.x = w + 4;
+      if (p.x > w + 4) p.x = -4;
+      p.opacity += p.opacityDir * p.opacitySpeed;
+      if (p.opacity > 0.95) { p.opacity = 0.95; p.opacityDir = -1; }
+      if (p.opacity < 0.12) { p.opacity = 0.12; p.opacityDir = 1; }
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${p.color}, ${p.opacity})`;
+      ctx.fill();
+    }
+    rafId = requestAnimationFrame(frame);
+  }
+
+  let rafId;
+  let running = false;
+  return {
+    start() { if (!running) { running = true; resize(); frame(); } },
+    stop() { if (running) { running = false; cancelAnimationFrame(rafId); } }
+  };
+}
+
+let resultSparklesInstance = null;
+function startResultSparkles() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const canvas = document.getElementById('resultSparkles');
+  if (!canvas) return;
+  if (!resultSparklesInstance) resultSparklesInstance = initSparkles(canvas);
+  resultSparklesInstance.start();
+}
+window.addEventListener('resize', () => { if (resultSparklesInstance) { resultSparklesInstance.stop(); resultSparklesInstance.start(); } });
+
+// ============ INIT ============
+showScreen(0);
+</script>
+
+</body>
+</html>
