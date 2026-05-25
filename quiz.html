@@ -416,8 +416,9 @@
     line-height: 1.5;
   }
   .tariff-price-row {
-    display: flex; align-items: baseline; gap: 8px;
+    display: flex; align-items: baseline; gap: 10px;
     margin-bottom: 4px;
+    flex-wrap: wrap;
   }
   .tariff-price {
     font-family: 'Manrope', sans-serif;
@@ -425,6 +426,43 @@
     font-size: 2.3rem;
     color: var(--accent-deep);
     line-height: 1;
+  }
+  .tariff-price-old {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 600;
+    font-size: 1.4rem;
+    color: var(--muted);
+    text-decoration: line-through;
+    text-decoration-color: rgba(214, 112, 198, 0.55);
+    text-decoration-thickness: 2px;
+    line-height: 1;
+  }
+  .stream-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #F5A5E8 0%, #E783DA 50%, #D670C6 100%);
+    color: white;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 100px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 12px rgba(231, 131, 218, 0.3);
+    text-shadow: 0 1px 1px rgba(110, 30, 90, 0.2);
+  }
+  .tariff-savings {
+    display: inline-block;
+    background: rgba(245, 201, 238, 0.45);
+    color: var(--accent-deep);
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 100px;
+    margin: 6px 0 14px;
+    border: 1px solid rgba(231, 131, 218, 0.4);
   }
   .tariff-price-cur {
     font-family: 'Manrope', sans-serif;
@@ -751,7 +789,9 @@ const TARIFFS = {
     id: 'self',
     name: 'Самостійний',
     tagline: 'Запис моєї VIP-сесії з клієнткою, яка має такий само запит, як у тебе. Без живої роботи зі мною.',
-    price: '$150',
+    price: '$100',
+    priceOld: '$250',
+    savings: 'Економія $150 (60%)',
     priceMeta: 'оплата частинами до року',
     features: [
       'Сесія в записі з усіма інструкціями і промтами',
@@ -759,13 +799,15 @@ const TARIFFS = {
       ...BONUSES,
     ],
     cta: 'Беру Самостійний',
-    payUrl: 'https://secure.wayforpay.com/payment/sf0cb8c9852f2'
+    payUrl: 'https://secure.wayforpay.com/payment/s40857da1a901'
   },
   vip: {
     id: 'vip',
     name: 'VIP-День',
     tagline: '3 години живої роботи 1-на-1 + 2 тижні підтримки впровадження.',
-    price: '$400',
+    price: '$250',
+    priceOld: '$350',
+    savings: 'Економія $100 (29%)',
     priceMeta: 'оплата частинами до року',
     features: [
       '3-годинна сесія зі мною',
@@ -778,13 +820,15 @@ const TARIFFS = {
       ...BONUSES,
     ],
     cta: 'Забронювати VIP-День',
-    payUrl: 'https://secure.wayforpay.com/payment/sf0cb8c9852f2'
+    payUrl: 'https://secure.wayforpay.com/payment/s659a7585ef9f'
   },
   sprint: {
     id: 'sprint',
     name: 'Спринт 21 день',
     tagline: '3 глибокі сесії × детальна робота над усіма точками бізнесу + 1 місяць підтримки.',
-    price: '$800',
+    price: '$700',
+    priceOld: '$900',
+    savings: 'Економія $200 (22%)',
     priceMeta: 'оплата частинами до року',
     features: [
       '3 живі сесії - стратегія, продукт, воронка',
@@ -795,7 +839,7 @@ const TARIFFS = {
       ...BONUSES,
     ],
     cta: 'Почати Спринт',
-    payUrl: 'https://secure.wayforpay.com/payment/sf0cb8c9852f2'
+    payUrl: 'https://secure.wayforpay.com/payment/s84d664dc9807'
   }
 };
 
@@ -953,9 +997,12 @@ function renderTariffCards(recommended) {
       ${isRec ? '<span class="tariff-badge">★ Рекомендуємо тобі</span>' : ''}
       <div class="tariff-name">${t.name}</div>
       <div class="tariff-tagline">${t.tagline}</div>
+      <div class="stream-badge">🎁 Для учасників стріму</div>
       <div class="tariff-price-row">
         <span class="tariff-price">${t.price}</span>
+        <span class="tariff-price-old">${t.priceOld}</span>
       </div>
+      <div class="tariff-savings">${t.savings}</div>
       <div class="tariff-price-meta">${t.priceMeta}</div>
       <ul class="tariff-features">
         ${t.features.map(f => `<li>${f}</li>`).join('')}

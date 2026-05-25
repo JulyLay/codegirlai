@@ -150,10 +150,44 @@
     font-size: 0.94rem; color: var(--muted);
     margin-bottom: 24px; min-height: 52px; line-height: 1.5;
   }
-  .tariff-price-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; }
+  .tariff-price-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; flex-wrap: wrap; }
   .tariff-price {
     font-family: 'Manrope', sans-serif; font-weight: 800;
     font-size: 2.5rem; color: var(--accent-deep); line-height: 1;
+  }
+  .tariff-price-old {
+    font-family: 'Manrope', sans-serif; font-weight: 600;
+    font-size: 1.5rem; color: var(--muted);
+    text-decoration: line-through;
+    text-decoration-color: rgba(214, 112, 198, 0.55);
+    text-decoration-thickness: 2px;
+    line-height: 1;
+  }
+  .stream-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #F5A5E8 0%, #E783DA 50%, #D670C6 100%);
+    color: white;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.74rem; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 100px;
+    margin-bottom: 14px;
+    box-shadow: 0 4px 12px rgba(231, 131, 218, 0.3);
+    text-shadow: 0 1px 1px rgba(110, 30, 90, 0.2);
+    align-self: flex-start;
+  }
+  .tariff-savings {
+    display: inline-block;
+    background: rgba(245, 201, 238, 0.45);
+    color: var(--accent-deep);
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.85rem; font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 100px;
+    margin: 8px 0 16px;
+    border: 1px solid rgba(231, 131, 218, 0.4);
+    align-self: flex-start;
   }
   .tariff-price-meta {
     font-size: 0.85rem; color: var(--muted);
@@ -342,9 +376,12 @@
       <div class="tariff-card">
         <div class="tariff-name">Самостійний</div>
         <div class="tariff-tagline">Запис моєї VIP-сесії з клієнткою, яка має такий само запит, як у тебе. Без живої роботи зі мною.</div>
+        <div class="stream-badge">🎁 Для учасників стріму</div>
         <div class="tariff-price-row">
-          <span class="tariff-price">$150</span>
+          <span class="tariff-price">$100</span>
+          <span class="tariff-price-old">$250</span>
         </div>
+        <div class="tariff-savings">Економія $150 (60%)</div>
         <div class="tariff-price-meta">оплата частинами до року</div>
         <ul class="tariff-features">
           <li>Сесія в записі з усіма інструкціями і промтами</li>
@@ -352,7 +389,7 @@
           <li>🎁 Закритий Telegram-канал з фішками AI для маркетингу і життя</li>
           <li>🎁 10 AI-асистентів для Claude - ресьорч, воронки, контент</li>
         </ul>
-        <a href="https://secure.wayforpay.com/payment/sf0cb8c9852f2" target="_blank" rel="noopener" class="btn"><span>Беру Самостійний</span></a>
+        <a href="https://secure.wayforpay.com/payment/s40857da1a901" target="_blank" rel="noopener" class="btn"><span>Беру Самостійний</span></a>
       </div>
 
       <!-- VIP-День -->
@@ -360,9 +397,12 @@
         <span class="tariff-badge">★ Найпопулярніший</span>
         <div class="tariff-name">VIP-День</div>
         <div class="tariff-tagline">3 години живої роботи 1-на-1 + 2 тижні підтримки впровадження.</div>
+        <div class="stream-badge">🎁 Для учасників стріму</div>
         <div class="tariff-price-row">
-          <span class="tariff-price">$400</span>
+          <span class="tariff-price">$250</span>
+          <span class="tariff-price-old">$350</span>
         </div>
+        <div class="tariff-savings">Економія $100 (29%)</div>
         <div class="tariff-price-meta">оплата частинами до року</div>
         <ul class="tariff-features">
           <li>3-годинна сесія зі мною</li>
@@ -375,16 +415,19 @@
           <li>🎁 Закритий Telegram-канал з фішками AI для маркетингу і життя</li>
           <li>🎁 10 AI-асистентів для Claude - ресьорч, воронки, контент</li>
         </ul>
-        <a href="https://secure.wayforpay.com/payment/sf0cb8c9852f2" target="_blank" rel="noopener" class="btn"><span>Забронювати VIP-День</span></a>
+        <a href="https://secure.wayforpay.com/payment/s659a7585ef9f" target="_blank" rel="noopener" class="btn"><span>Забронювати VIP-День</span></a>
       </div>
 
       <!-- Спринт 21 день -->
       <div class="tariff-card">
         <div class="tariff-name">Спринт 21 день</div>
         <div class="tariff-tagline">3 глибокі сесії × детальна робота над усіма точками бізнесу + 1 місяць підтримки.</div>
+        <div class="stream-badge">🎁 Для учасників стріму</div>
         <div class="tariff-price-row">
-          <span class="tariff-price">$800</span>
+          <span class="tariff-price">$700</span>
+          <span class="tariff-price-old">$900</span>
         </div>
+        <div class="tariff-savings">Економія $200 (22%)</div>
         <div class="tariff-price-meta">оплата частинами до року</div>
         <ul class="tariff-features">
           <li>3 живі сесії - стратегія, продукт, воронка</li>
@@ -395,7 +438,7 @@
           <li>🎁 Закритий Telegram-канал з фішками AI для маркетингу і життя</li>
           <li>🎁 10 AI-асистентів для Claude - ресьорч, воронки, контент</li>
         </ul>
-        <a href="https://secure.wayforpay.com/payment/sf0cb8c9852f2" target="_blank" rel="noopener" class="btn"><span>Почати Спринт</span></a>
+        <a href="https://secure.wayforpay.com/payment/s84d664dc9807" target="_blank" rel="noopener" class="btn"><span>Почати Спринт</span></a>
       </div>
 
     </div>
