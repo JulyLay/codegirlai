@@ -353,6 +353,31 @@
     }
     .compare-row > div:first-child { padding-bottom: 6px; border-bottom: 1px solid var(--bg); margin-bottom: 4px; }
   }
+  .currency-toggle {
+    display: inline-flex; align-items: center; gap: 4px;
+    margin: 22px auto 0;
+    background: var(--card);
+    border: 1.5px solid var(--accent-soft);
+    border-radius: 100px;
+    padding: 4px;
+  }
+  .currency-toggle button {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700; font-size: 0.9rem;
+    color: var(--muted);
+    background: transparent; border: none; cursor: pointer;
+    padding: 7px 18px; border-radius: 100px;
+    transition: all 0.2s ease;
+  }
+  .currency-toggle button.active {
+    background: linear-gradient(135deg, #F5A5E8 0%, #E783DA 50%, #D670C6 100%);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(231, 131, 218, 0.3);
+  }
+  .currency-rate-note {
+    display: block; font-size: 0.8rem; color: var(--muted);
+    margin-top: 10px; min-height: 1.1em;
+  }
 </style>
 </head>
 <body>
@@ -364,6 +389,11 @@
     <h1>Обирай свій формат роботи - і починаємо</h1>
     <p>Самостійний / VIP-День / Спринт 21 день. Всі три - твоя система маркетингу від хаосу до стабільних продажів. Відрізняються глибиною роботи і моєю присутністю.</p>
     <a href="quiz.html" class="quiz-link">Не впевнена який обрати? Пройди квіз за 2 хв →</a>
+    <div class="currency-toggle" role="group" aria-label="Перемикач валют">
+      <button type="button" data-currency="USD" class="active">$ USD</button>
+      <button type="button" data-currency="UAH">₴ грн</button>
+    </div>
+    <span class="currency-rate-note" id="currencyRateNote"></span>
   </div>
 </header>
 
@@ -378,10 +408,10 @@
         <div class="tariff-tagline">Запис моєї VIP-сесії з клієнткою, яка має такий само запит, як у тебе. Без живої роботи зі мною.</div>
         <div class="stream-badge">🎁 Для учасників стріму</div>
         <div class="tariff-price-row">
-          <span class="tariff-price">$100</span>
-          <span class="tariff-price-old">$250</span>
+          <span class="tariff-price" data-usd="100">$100</span>
+          <span class="tariff-price-old" data-usd="250">$250</span>
         </div>
-        <div class="tariff-savings">Економія $150 (60%)</div>
+        <div class="tariff-savings">Економія <span data-usd="150">$150</span> (60%)</div>
         <div class="tariff-price-meta">оплата частинами до року</div>
         <ul class="tariff-features">
           <li>Сесія в записі з усіма інструкціями і промтами</li>
@@ -399,10 +429,10 @@
         <div class="tariff-tagline">3 години живої роботи 1-на-1 + 2 тижні підтримки впровадження.</div>
         <div class="stream-badge">🎁 Для учасників стріму</div>
         <div class="tariff-price-row">
-          <span class="tariff-price">$250</span>
-          <span class="tariff-price-old">$350</span>
+          <span class="tariff-price" data-usd="250">$250</span>
+          <span class="tariff-price-old" data-usd="350">$350</span>
         </div>
-        <div class="tariff-savings">Економія $100 (29%)</div>
+        <div class="tariff-savings">Економія <span data-usd="100">$100</span> (29%)</div>
         <div class="tariff-price-meta">оплата частинами до року</div>
         <ul class="tariff-features">
           <li>3-годинна сесія зі мною</li>
@@ -424,10 +454,10 @@
         <div class="tariff-tagline">3 глибокі сесії × детальна робота над усіма точками бізнесу + 1 місяць підтримки.</div>
         <div class="stream-badge">🎁 Для учасників стріму</div>
         <div class="tariff-price-row">
-          <span class="tariff-price">$700</span>
-          <span class="tariff-price-old">$900</span>
+          <span class="tariff-price" data-usd="700">$700</span>
+          <span class="tariff-price-old" data-usd="900">$900</span>
         </div>
-        <div class="tariff-savings">Економія $200 (22%)</div>
+        <div class="tariff-savings">Економія <span data-usd="200">$200</span> (22%)</div>
         <div class="tariff-price-meta">оплата частинами до року</div>
         <ul class="tariff-features">
           <li>3 живі сесії - стратегія, продукт, воронка</li>
@@ -608,5 +638,56 @@
   </svg>
 </a>
 
+<script>
+(function () {
+  var FALLBACK_RATE = 44;            // запасний курс, якщо API НБУ недоступне
+  var note = document.getElementById('currencyRateNote');
+  var buttons = document.querySelectorAll('.currency-toggle button');
+  var priceEls = document.querySelectorAll('[data-usd]');
+  var rate = null;
+  var rateDate = '';
+
+  function fmtUAH(usd) {
+    var uah = Math.round(usd * rate);
+    return '₴' + uah.toLocaleString('uk-UA').replace(/ /g, ' ');
+  }
+
+  function render(currency) {
+    priceEls.forEach(function (el) {
+      var usd = parseFloat(el.getAttribute('data-usd'));
+      if (currency === 'UAH' && rate) {
+        el.textContent = fmtUAH(usd);
+      } else {
+        el.textContent = '$' + usd;
+      }
+    });
+    if (currency === 'UAH' && rate) {
+      note.textContent = 'Курс НБУ: 1$ = ' + rate.toFixed(2) + ' ₴' + (rateDate ? ' (' + rateDate + ')' : '');
+    } else {
+      note.textContent = '';
+    }
+  }
+
+  buttons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      buttons.forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      render(btn.getAttribute('data-currency'));
+    });
+  });
+
+  fetch('https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=USD&json')
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      if (data && data[0] && data[0].rate) {
+        rate = data[0].rate;
+        rateDate = data[0].exchangedate || '';
+      } else {
+        rate = FALLBACK_RATE;
+      }
+    })
+    .catch(function () { rate = FALLBACK_RATE; });
+})();
+</script>
 </body>
 </html>
