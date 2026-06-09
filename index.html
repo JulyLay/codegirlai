@@ -76,6 +76,7 @@
     height: 100%;
     object-fit: cover;
     z-index: -2;
+    background: linear-gradient(135deg, #E8D5F0 0%, #D5D6E2 50%, #F5C9EE 100%);
   }
   .hero-overlay {
     position: absolute;
@@ -558,7 +559,7 @@
 
 <!-- ============ HERO (video background) ============ -->
 <section class="hero">
-  <video class="hero-bg-video" autoplay muted loop playsinline poster="hero-video-poster.jpg">
+  <video class="hero-bg-video" autoplay muted loop playsinline>
     <source src="hero-video.mp4" type="video/mp4">
   </video>
   <div class="hero-overlay"></div>
@@ -768,22 +769,12 @@
   </div>
 </section>
 
-<!-- ============ FINAL CTA (bottom, inverted: format primary) ============ -->
+<!-- ============ FINAL CTA (bottom — just two buttons, inverted) ============ -->
 <section id="final-cta">
   <div class="container">
-    <div class="final fade-in">
-      <canvas class="bg-sparkles" aria-hidden="true"></canvas>
-      <div class="final-inner">
-        <h2>Готова перестати працювати на двох роботах (твоя експертність і маркетинг) і отримати систему, яка дає тобі контроль над доходом?</h2>
-        <div class="hero-cta-row">
-          <a href="tariffs.html" class="btn btn-large"><span>Обрати формат роботи →</span></a>
-          <a href="quiz.html" class="btn-secondary">Пройти квіз · 2 хв</a>
-        </div>
-        <small>Якщо ще сумніваєшся - пройди квіз, він підкаже формат за 2 хвилини. Без дзвінків-діагностик.</small>
-        <p style="margin-top:18px; font-size:0.95rem; color:var(--ink); opacity:0.8; max-width:620px; margin-left:auto; margin-right:auto; font-style:italic;">
-          Моя задача: навчити тебе робити той маркетинг, який працює, поки ти спиш, проводиш час з сім'єю, відпочиваєш чи просто не в настрої.
-        </p>
-      </div>
+    <div class="hero-cta-row fade-in" style="margin: 0 auto;">
+      <a href="tariffs.html" class="btn btn-large"><span>Обрати формат роботи →</span></a>
+      <a href="quiz.html" class="btn-secondary">Пройти квіз · 2 хв</a>
     </div>
   </div>
 </section>
