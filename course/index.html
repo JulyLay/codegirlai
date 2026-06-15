@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#D5D6E2">
+<title>Claude замість маркетингової команди - за 6 уроків · Юлія Лайко</title>
+<meta name="description" content="Мінікурс із 6 уроків про Claude: встановлення, метапромптинг, AI-асистенти, deep research, копірайтинг у твоєму голосі, AI-фотосет. Качаєш, налаштовуєш - і далі Claude робить за тебе. 799 грн.">
+<meta property="og:title" content="Claude замість маркетингової команди - за 6 уроків">
+<meta property="og:description" content="Мінікурс за 799 грн. 6 уроків. Доступ одразу після оплати.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #D5D6E2;
+    --card: #FFFFFF;
+    --soft: #C7C8D6;
+    --ink: #1F1F2E;
+    --heading: #2D2D3A;
+    --muted: #8A8B98;
+    --accent: #E783DA;
+    --accent-soft: #F5C9EE;
+    --accent-deep: #D670C6;
+    --silver: #B8BCC8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    font-size: 17px;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  img, video { max-width: 100%; height: auto; display: block; }
+  button, .btn { touch-action: manipulation; }
+  .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+  h1, h2, h3, h4 { font-family: 'Manrope', system-ui, sans-serif; color: var(--heading); letter-spacing: -0.015em; }
+  h1 { font-weight: 800; line-height: 1.08; }
+  h2 { font-weight: 700; line-height: 1.15; }
+  h3 { font-weight: 600; line-height: 1.3; }
+  strong { font-weight: 700; color: var(--heading); }
+
+  .fade-in {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 800ms cubic-bezier(0.16, 1, 0.3, 1), transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+  .fade-in.delay-1 { transition-delay: 100ms; }
+  .fade-in.delay-2 { transition-delay: 200ms; }
+  .fade-in.delay-3 { transition-delay: 300ms; }
+  .fade-in.delay-4 { transition-delay: 400ms; }
+
+  /* HERO */
+  .hero { position: relative; padding: 90px 0 110px; text-align: center; overflow: hidden; isolation: isolate; }
+  .hero-bg-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 20%; z-index: -2; background: linear-gradient(135deg, var(--accent-soft) 0%, var(--bg) 60%, var(--soft) 100%); }
+  .hero-overlay {
+    position: absolute; inset: 0; z-index: -1;
+    background:
+      linear-gradient(180deg, rgba(213,214,226,0.88) 0%, rgba(213,214,226,0.55) 35%, rgba(213,214,226,0.55) 65%, rgba(213,214,226,0.96) 100%),
+      radial-gradient(circle at 50% 40%, rgba(245,201,238,0.28) 0%, transparent 60%);
+  }
+  .hero .container { position: relative; z-index: 1; }
+  .hero-eyebrow {
+    display: inline-block;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    color: var(--accent-deep);
+    padding: 8px 18px; border-radius: 100px;
+    font-family: 'Manrope', sans-serif; font-size: 0.82rem; font-weight: 600;
+    margin-bottom: 26px; letter-spacing: 0.02em;
+  }
+  .hero h1 { font-size: clamp(2rem, 6vw, 3.6rem); margin-bottom: 22px; }
+  .hero h1 .accent { color: var(--accent-deep); }
+  .hero-sub {
+    font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+    color: var(--ink); max-width: 640px; margin: 0 auto 38px;
+  }
+  .hero-cta { display: flex; flex-direction: column; gap: 14px; align-items: center; margin-bottom: 28px; }
+  .hero-trust { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px; color: var(--muted); font-size: 0.9rem; }
+  .hero-trust span { display: inline-flex; align-items: center; gap: 6px; }
+
+  /* === BUTTON (glossy + shine sweep, як на codegirlai) === */
+  .btn {
+    position: relative;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 18px 36px;
+    background: linear-gradient(180deg, #F5A5E8 0%, #E783DA 50%, #D670C6 100%);
+    color: #fff;
+    font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 1.05rem;
+    text-decoration: none;
+    border-radius: 100px; border: none; cursor: pointer;
+    transition: transform 200ms ease, box-shadow 250ms ease, filter 250ms ease;
+    box-shadow:
+      0 4px 14px rgba(231,131,218,0.45),
+      0 12px 32px rgba(231,131,218,0.18),
+      inset 0 1px 0 rgba(255,255,255,0.55),
+      inset 0 -2px 0 rgba(110,30,90,0.18);
+    min-height: 56px; width: 100%; max-width: 360px;
+    overflow: hidden; isolation: isolate;
+    text-shadow: 0 1px 1px rgba(110,30,90,0.25);
+  }
+  /* Глянцевий блік */
+  .btn::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.42) 0%, rgba(255,255,255,0.08) 45%, transparent 60%);
+    border-radius: inherit; pointer-events: none; z-index: 1;
+  }
+  /* Shine sweep по hover */
+  .btn::after {
+    content: ''; position: absolute;
+    top: 0; left: -75%; width: 50%; height: 100%;
+    background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.45) 50%, transparent 100%);
+    transform: skewX(-20deg);
+    transition: left 700ms cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none; z-index: 2;
+  }
+  .btn > * { position: relative; z-index: 3; }
+  .btn:hover, .btn:active {
+    transform: translateY(-2px); filter: brightness(1.05);
+    box-shadow:
+      0 8px 24px rgba(231,131,218,0.55),
+      0 16px 40px rgba(231,131,218,0.25),
+      inset 0 1px 0 rgba(255,255,255,0.65),
+      inset 0 -2px 0 rgba(110,30,90,0.2);
+  }
+  .btn:hover::after { left: 125%; }
+  .btn:active { transform: translateY(0); filter: brightness(0.97); }
+  .btn-accent { /* alias - вже стилізована як accent */ }
+
+  .btn-ghost {
+    background: rgba(255,255,255,0.7); color: var(--accent-deep);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    border: 1.5px solid var(--accent);
+    box-shadow: 0 4px 16px rgba(31,31,46,0.06);
+    text-shadow: none;
+  }
+  .btn-ghost::before, .btn-ghost::after { display: none; }
+  .btn-ghost:hover { background: var(--accent-soft); filter: none; }
+
+  /* === SPARKLES CANVAS === */
+  .bg-sparkles {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    pointer-events: none; z-index: 0;
+  }
+
+  /* SECTIONS */
+  section { padding: 70px 0; }
+  .section-eyebrow {
+    display: inline-block; color: var(--accent-deep);
+    font-family: 'Manrope', sans-serif; font-size: 0.82rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px;
+  }
+  .section-title { font-size: clamp(1.6rem, 4.5vw, 2.4rem); margin-bottom: 20px; }
+  .section-lead { font-size: 1.08rem; color: var(--ink); max-width: 680px; margin-bottom: 36px; }
+
+  /* PAIN */
+  .pain-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .pain-row {
+    display: grid; grid-template-columns: 1fr; gap: 14px;
+    background: rgba(255,255,255,0.55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-radius: 18px; padding: 16px;
+    transition: transform 300ms, background 300ms;
+  }
+  .pain-row:hover { background: rgba(255,255,255,0.75); }
+  .pain-video {
+    width: 100%; height: 200px; border-radius: 14px; overflow: hidden;
+    background: var(--soft); position: relative;
+  }
+  .pain-video video { width: 100%; height: 100%; object-fit: cover; }
+  .pain-row-text { display: flex; align-items: flex-start; gap: 12px; font-size: 0.98rem; line-height: 1.55; }
+  .pain-row-text .x { color: var(--accent-deep); font-weight: 700; flex-shrink: 0; font-size: 1.2rem; }
+
+  /* TRANSITION (було/стало) */
+  .transition-block { background: rgba(255,255,255,0.5); border-radius: 24px; padding: 36px 24px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+  .compare { display: flex; flex-direction: column; gap: 16px; margin-top: 28px; }
+  .compare-row {
+    display: grid; grid-template-columns: 1fr; gap: 12px;
+    background: var(--card); border-radius: 16px; padding: 18px 20px;
+    box-shadow: 0 4px 16px rgba(31,31,46,0.06);
+  }
+  .compare-side { display: flex; gap: 10px; align-items: flex-start; font-size: 0.95rem; }
+  .compare-side .icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+  .compare-was { color: var(--muted); }
+  .compare-now { color: var(--heading); font-weight: 600; }
+  .compare-arrow { color: var(--accent-deep); font-weight: 700; }
+
+  /* LESSONS GRID */
+  .lessons-grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
+  .lesson-card {
+    background: var(--card); border-radius: 22px; overflow: hidden;
+    box-shadow: 0 8px 30px rgba(31,31,46,0.08);
+    transition: transform 300ms, box-shadow 300ms;
+    position: relative; display: flex; flex-direction: column;
+  }
+  .lesson-card:hover { transform: translateY(-4px); box-shadow: 0 14px 40px rgba(31,31,46,0.14); }
+  .lesson-card.featured { border: 2px solid var(--accent); }
+  .lesson-card.featured::before {
+    content: '⭐ найсильніший урок';
+    position: absolute; top: 14px; right: 14px; z-index: 2;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
+    color: #fff; padding: 5px 12px; border-radius: 100px;
+    font-family: 'Manrope', sans-serif; font-size: 0.72rem; font-weight: 700;
+  }
+  .lesson-image { width: 100%; aspect-ratio: 1/1; background: var(--soft); overflow: hidden; }
+  .lesson-image img { width: 100%; height: 100%; object-fit: cover; }
+  .lesson-image.placeholder {
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, var(--soft) 0%, var(--accent-soft) 100%);
+    color: var(--accent-deep); font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 3rem;
+  }
+  .lesson-body { padding: 22px 22px 26px; }
+  .lesson-badge {
+    display: inline-block; background: var(--bg); color: var(--accent-deep);
+    padding: 4px 12px; border-radius: 100px;
+    font-family: 'Manrope', sans-serif; font-size: 0.74rem; font-weight: 700;
+    letter-spacing: 0.08em; margin-bottom: 10px;
+  }
+  .lesson-title { font-size: 1.2rem; margin-bottom: 10px; line-height: 1.25; }
+  .lesson-title .emoji { margin-right: 6px; }
+  .lesson-desc { font-size: 0.96rem; color: var(--ink); line-height: 1.5; }
+
+  /* INTRIGUE (deep research) */
+  .intrigue {
+    background: linear-gradient(135deg, #2D2D3A 0%, #1F1F2E 100%);
+    color: #fff; border-radius: 30px; padding: 50px 28px;
+    position: relative; overflow: hidden;
+  }
+  .intrigue::before {
+    content: ''; position: absolute; top: -50%; right: -20%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(231,131,218,0.35) 0%, transparent 60%);
+    border-radius: 50%; z-index: 0;
+  }
+  .intrigue > *:not(.bg-sparkles) { position: relative; z-index: 1; }
+  .intrigue h2 { color: #fff; margin-bottom: 20px; }
+  .intrigue .section-eyebrow { color: var(--accent-soft); }
+  .intrigue p { color: rgba(255,255,255,0.85); margin-bottom: 18px; font-size: 1.02rem; }
+  .intrigue p strong { color: #fff; }
+  .quote-card {
+    margin-top: 26px; padding: 22px 24px;
+    background: rgba(255,255,255,0.07);
+    border-left: 3px solid var(--accent);
+    border-radius: 14px;
+    font-family: 'Manrope', sans-serif; font-size: 1.08rem; font-weight: 600;
+    color: #fff; line-height: 1.4;
+  }
+
+  /* PRICE */
+  .price-section { padding: 80px 0; }
+  .price-card {
+    background: rgba(255,255,255,0.85); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-radius: 30px; padding: 44px 28px; text-align: center;
+    box-shadow: 0 20px 60px rgba(31,31,46,0.14);
+    max-width: 560px; margin: 0 auto;
+    position: relative; overflow: hidden;
+  }
+  .price-card::before {
+    content: ''; position: absolute; top: -60%; left: -30%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(231,131,218,0.18) 0%, transparent 60%);
+    border-radius: 50%; z-index: 0;
+  }
+  .price-card > *:not(.bg-sparkles) { position: relative; z-index: 1; }
+  .price-eyebrow { color: var(--accent-deep); font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 0.9rem; margin-bottom: 12px; letter-spacing: 0.04em; }
+  .price-amount {
+    font-family: 'Manrope', sans-serif; font-weight: 800;
+    font-size: clamp(3rem, 9vw, 4.5rem); color: var(--heading);
+    line-height: 1; margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--accent-deep) 0%, var(--ink) 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .price-currency { font-size: 0.5em; vertical-align: super; opacity: 0.7; margin-left: 4px; }
+  .price-subtitle { color: var(--muted); font-size: 0.95rem; margin-bottom: 26px; }
+  .price-features { list-style: none; text-align: left; max-width: 320px; margin: 0 auto 30px; display: flex; flex-direction: column; gap: 12px; }
+  .price-features li { display: flex; gap: 10px; align-items: flex-start; font-size: 0.98rem; color: var(--ink); }
+  .price-features .check { color: var(--accent-deep); font-weight: 700; flex-shrink: 0; }
+  .price-note { color: var(--muted); font-size: 0.82rem; margin-top: 18px; }
+  .price-note a { color: var(--accent-deep); text-decoration: none; }
+
+  /* FAQ */
+  .faq-list { display: flex; flex-direction: column; gap: 12px; max-width: 760px; }
+  .faq-item {
+    background: rgba(255,255,255,0.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    border-radius: 18px; padding: 0;
+    transition: background 240ms;
+  }
+  .faq-item summary {
+    cursor: pointer; padding: 20px 24px;
+    font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 1.02rem;
+    color: var(--heading); list-style: none;
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after {
+    content: '+'; font-size: 1.6rem; color: var(--accent-deep);
+    font-weight: 400; transition: transform 260ms;
+  }
+  .faq-item[open] summary::after { transform: rotate(45deg); }
+  .faq-item[open] { background: rgba(255,255,255,0.85); }
+  .faq-answer { padding: 0 24px 22px; color: var(--ink); font-size: 0.98rem; line-height: 1.6; }
+
+  /* FOOTER */
+  footer { padding: 40px 0 30px; text-align: center; color: var(--muted); font-size: 0.88rem; border-top: 1px solid rgba(31,31,46,0.08); }
+  footer a { color: var(--accent-deep); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* DESKTOP */
+  @media (min-width: 720px) {
+    .hero { padding: 130px 0 140px; }
+    .hero-cta { flex-direction: row; justify-content: center; }
+    .btn { width: auto; }
+    .pain-row { grid-template-columns: 140px 1fr; gap: 20px; align-items: center; padding: 18px; }
+    .pain-video { width: 140px; height: 140px; border-radius: 14px; }
+    .compare-row { grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: center; padding: 22px 26px; }
+    .lessons-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .lesson-image { aspect-ratio: 4/3; }
+    .intrigue { padding: 70px 60px; }
+    .transition-block { padding: 50px 44px; }
+  }
+  @media (min-width: 1000px) {
+    .lessons-grid { grid-template-columns: repeat(3, 1fr); }
+    section { padding: 90px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <video class="hero-bg-video" autoplay muted loop playsinline preload="auto">
+    <source src="images/hero-video.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <canvas class="bg-sparkles" aria-hidden="true"></canvas>
+  <div class="container">
+    <span class="hero-eyebrow fade-in">Мінікурс · 6 уроків · 799 грн</span>
+    <h1 class="fade-in delay-1">Claude замість <span class="accent">маркетингової команди</span> - за 6 уроків</h1>
+    <p class="hero-sub fade-in delay-2">Качаєш, налаштовуєш - і далі Claude робить за тебе.</p>
+    <div class="hero-cta fade-in delay-3">
+      <a href="#price" class="btn btn-accent">Забрати курс за 799 грн →</a>
+      <a href="#lessons" class="btn btn-ghost">Що всередині ↓</a>
+    </div>
+    <div class="hero-trust fade-in delay-4">
+      <span>⚡ Доступ одразу після оплати</span>
+      <span>🔒 Оплата через WayForPay</span>
+      <span>♾️ Залишається назавжди</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PAIN ===== -->
+<section>
+  <div class="container">
+    <span class="section-eyebrow fade-in">Знайома картина?</span>
+    <h2 class="section-title fade-in">Робиш все сам - вигораєш швидше, ніж заробляєш</h2>
+    <p class="section-lead fade-in">Контент, копірайт, аналіз, креатив, фото - все на тобі. ChatGPT не рятує: пластикова каша, переписуєш по 10 разів. Час іде, конкуренти випереджають.</p>
+    <ul class="pain-list">
+      <li class="pain-row fade-in">
+        <div class="pain-video"><video src="images/pain-3-facepalm.mp4" autoplay muted loop playsinline></video></div>
+        <div class="pain-row-text"><span class="x">✗</span><span>Відкриваєш ChatGPT - він видає <strong>пластикову кашу</strong>. Редагувати довше, ніж писати самому</span></div>
+      </li>
+      <li class="pain-row fade-in delay-1">
+        <div class="pain-video"><video src="images/pain-2-chaos.mp4" autoplay muted loop playsinline></video></div>
+        <div class="pain-row-text"><span class="x">✗</span><span><strong>2 години на один пост</strong>, який мав вийти за 30 хвилин. Продажів з нього - 0</span></div>
+      </li>
+      <li class="pain-row fade-in delay-2">
+        <div class="pain-video"><video src="images/pain-5-courses.mp4" autoplay muted loop playsinline></video></div>
+        <div class="pain-row-text"><span class="x">✗</span><span>Пройшов 2-3 курси - недопройшов. Купувати ще один <strong>страшно</strong></span></div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===== TRANSITION ===== -->
+<section>
+  <div class="container">
+    <div class="transition-block fade-in">
+      <span class="section-eyebrow">А якщо</span>
+      <h2 class="section-title">Просто кажеш - і зробилось</h2>
+      <div class="compare">
+        <div class="compare-row">
+          <div class="compare-side compare-was"><span class="icon">✗</span><span>2 години на один пост</span></div>
+          <div class="compare-arrow">→</div>
+          <div class="compare-side compare-now"><span class="icon">✓</span><span>Максимум 30 хвилин</span></div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-side compare-was"><span class="icon">✗</span><span>Платиш агенції 50к за маркетинг-план</span></div>
+          <div class="compare-arrow">→</div>
+          <div class="compare-side compare-now"><span class="icon">✓</span><span>Робиш самостійно за вечір</span></div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-side compare-was"><span class="icon">✗</span><span>500 переписувань промта</span></div>
+          <div class="compare-arrow">→</div>
+          <div class="compare-side compare-now"><span class="icon">✓</span><span>Один промт - і готово</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LESSONS ===== -->
+<section id="lessons">
+  <div class="container">
+    <span class="section-eyebrow fade-in">Програма</span>
+    <h2 class="section-title fade-in">Що ти отримаєш у мінікурсі</h2>
+    <p class="section-lead fade-in">6 уроків. Проходиш у своєму темпі. На виході - Claude, який реально замінює маркетингову команду.</p>
+    <div class="lessons-grid">
+
+      <article class="lesson-card fade-in">
+        <div class="lesson-image"><img src="images/lesson-1-setup.png" alt="Урок 1" loading="lazy" onerror="this.parentElement.classList.add('placeholder');this.style.display='none';this.parentElement.innerHTML='🛠️'"></div>
+        <div class="lesson-body">
+          <span class="lesson-badge">Урок 01</span>
+          <h3 class="lesson-title"><span class="emoji">🛠️</span>Старт з нуля</h3>
+          <p class="lesson-desc">Качаєш. Встановлюєш. Даєш правильні дозволи. 15 хвилин - і на компі живе істота, яка вміє все.</p>
+        </div>
+      </article>
+
+      <article class="lesson-card fade-in delay-1">
+        <div class="lesson-image"><img src="images/content-ai.png" alt="Урок 2" loading="lazy"></div>
+        <div class="lesson-body">
+          <span class="lesson-badge">Урок 02</span>
+          <h3 class="lesson-title"><span class="emoji">🧠</span>Метапромптинг</h3>
+          <p class="lesson-desc">Один промт - якісний результат з першої спроби. Не 500 переписувань, а 2 хвилини - і Claude приносить рівно те, що треба.</p>
+        </div>
+      </article>
+
+      <article class="lesson-card fade-in delay-2">
+        <div class="lesson-image"><img src="images/lesson-3-assistants.png" alt="Урок 3" loading="lazy" onerror="this.parentElement.classList.add('placeholder');this.style.display='none';this.parentElement.innerHTML='🤖'"></div>
+        <div class="lesson-body">
+          <span class="lesson-badge">Урок 03</span>
+          <h3 class="lesson-title"><span class="emoji">🤖</span>Установка моїх AI-асистентів</h3>
+          <p class="lesson-desc">Готові асистенти під кожну задачу - аналіз конкурентів, ринку, ЦА, копірайт, контент. Ставиш собі одним кліком і запускаєш однією командою.</p>
+        </div>
+      </article>
+
+      <article class="lesson-card featured fade-in delay-3">
+        <div class="lesson-image"><img src="images/research-market.png" alt="Урок 4" loading="lazy"></div>
+        <div class="lesson-body">
+          <span class="lesson-badge">Урок 04</span>
+          <h3 class="lesson-title"><span class="emoji">🎯</span>Deep research і маркетинг-план</h3>
+          <p class="lesson-desc">Claude сам копає ринок, конкурентів, аудиторію. Видає позиціонування і оффер, від якого клієнти не зможуть відмовитись.</p>
+        </div>
+      </article>
+
+      <article class="lesson-card fade-in delay-2">
+        <div class="lesson-image"><img src="images/lesson-5-copy.png" alt="Урок 5" loading="lazy" onerror="this.parentElement.classList.add('placeholder');this.style.display='none';this.parentElement.innerHTML='✍️'"></div>
+        <div class="lesson-body">
+          <span class="lesson-badge">Урок 05</span>
+          <h3 class="lesson-title"><span class="emoji">✍️</span>Копірайтинг + твій ToV</h3>
+          <p class="lesson-desc">Claude вчиться писати як ти, не як «усереднений експерт з LinkedIn». З ідеї в голові - готовий пост за 5 хвилин.</p>
+        </div>
+      </article>
+
+      <article class="lesson-card fade-in delay-3">
+        <div class="lesson-image"><img src="images/lesson-6-photo.png" alt="Урок 6" loading="lazy" onerror="this.parentElement.classList.add('placeholder');this.style.display='none';this.parentElement.innerHTML='📸'"></div>
+        <div class="lesson-body">
+          <span class="lesson-badge">Урок 06</span>
+          <h3 class="lesson-title"><span class="emoji">📸</span>Фотосет за 5 копійок</h3>
+          <p class="lesson-desc">Без фотографа, локацій і макіяжу о 7 ранку. Сказав Claude яку картинку треба - він зробив. Карусельки, обкладинки, банери, аватарки.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== INTRIGUE ===== -->
+<section>
+  <div class="container">
+    <div class="intrigue fade-in">
+      <canvas class="bg-sparkles" aria-hidden="true"></canvas>
+      <span class="section-eyebrow">Чому Урок 04 - найдорожче що тут є</span>
+      <h2>Deep research - це не «погуглив за тебе»</h2>
+      <p>Нейронка реально копає: ринок, конкурентів, оффери, болі аудиторії з реальних відгуків і коментарів. <strong>Не з уяви - з життя.</strong></p>
+      <p>Більшість пишуть пости, які подобаються їм самим. Роблять оффери, які звучать круто їм самим. А клієнт читає і йде.</p>
+      <p><strong>Позиціонування + оффер</strong> = причина, чому людина дістає карту і платить.</p>
+      <p>Слабкий оффер = продаж на надриві, через знижки, через «ну купіть». Сильний оффер = люди самі пишуть «як купити».</p>
+      <div class="quote-card">Те, за що маркетингові агенції просять 50к - Claude робить за вечір.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRICE ===== -->
+<section class="price-section" id="price">
+  <div class="container">
+    <div class="price-card fade-in">
+      <canvas class="bg-sparkles" aria-hidden="true"></canvas>
+      <div class="price-eyebrow">МІНІКУРС</div>
+      <div class="price-amount">799<span class="price-currency">грн</span></div>
+      <div class="price-subtitle">6 уроків. Одноразова оплата. Залишається назавжди.</div>
+      <ul class="price-features">
+        <li><span class="check">✓</span><span>6 уроків від встановлення до AI-фотосету</span></li>
+        <li><span class="check">✓</span><span>Готові AI-асистенти під кожну маркетингову задачу</span></li>
+        <li><span class="check">✓</span><span>Доступ одразу після оплати</span></li>
+        <li><span class="check">✓</span><span>Проходиш у своєму темпі</span></li>
+        <li><span class="check">✓</span><span>Українською. Без коду. Без англійської</span></li>
+      </ul>
+      <a href="https://secure.wayforpay.com/payment/s312d8b042e5e" target="_blank" rel="noopener" class="btn btn-accent" style="max-width:none;width:100%;">Оплатити 799 грн →</a>
+      <div class="price-note">ФОП Лайко Юлія Валеріївна · <a href="dogovir-oferty.html" target="_blank">Договір оферти</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section>
+  <div class="container">
+    <span class="section-eyebrow fade-in">Найчастіші питання</span>
+    <h2 class="section-title fade-in" style="margin-bottom: 36px;">FAQ</h2>
+    <div class="faq-list">
+
+      <details class="faq-item fade-in">
+        <summary>Якщо я новачок у нейронках?</summary>
+        <div class="faq-answer">Все ок. Ми починаємо з самого початку - з качання і встановлення Claude на твій комп. Урок 01 розрахований саме на тих, хто бачить це вперше.</div>
+      </details>
+
+      <details class="faq-item fade-in">
+        <summary>Чому саме Claude, а не ChatGPT?</summary>
+        <div class="faq-answer">Claude реально може замінити маркетингову команду. У ньому доступне створення асистентів під різні задачі - кожен працює натисканням однієї клавіші або однією командою. ChatGPT так не вміє. Я сама перейшла з GPT на Claude і не повертаюсь.</div>
+      </details>
+
+      <details class="faq-item fade-in">
+        <summary>Скільки часу займе пройти?</summary>
+        <div class="faq-answer">5-7 годин у своєму темпі. Можеш за один вечір, можеш розтягнути на тиждень - доступ залишається назавжди.</div>
+      </details>
+
+      <details class="faq-item fade-in">
+        <summary>Чи треба знати англійську або вміти програмувати?</summary>
+        <div class="faq-answer">Ні. Усе українською, без коду. Якщо вмієш користуватись комп'ютером і встановлювати програми - цього вистачить.</div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container">
+    © 2026 ФОП Лайко Юлія Валеріївна · <a href="https://t.me/julylay" target="_blank">Telegram @julylay</a> · <a href="dogovir-oferty.html" target="_blank">Договір оферти</a>
+  </div>
+</footer>
+
+<script>
+  // Fade-in on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+
+  // Sparkles (плаваючі частинки в рожево-білій палітрі)
+  function initSparkles(canvas) {
+    const ctx = canvas.getContext('2d');
+    let particles = [], w = 0, h = 0, rafId, running = false;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const density = 0.00018;
+    const COLORS = ['255,255,255', '231,131,218', '245,201,238', '214,112,198'];
+
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      w = rect.width; h = rect.height;
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const count = Math.max(40, Math.floor(w * h * density));
+      particles = [];
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * w, y: Math.random() * h,
+          size: Math.random() * 1.6 + 0.4,
+          speed: Math.random() * 0.35 + 0.05,
+          drift: (Math.random() - 0.5) * 0.15,
+          opacity: Math.random() * 0.6 + 0.2,
+          opacityDir: Math.random() > 0.5 ? 1 : -1,
+          opacitySpeed: Math.random() * 0.012 + 0.003,
+          color: COLORS[Math.floor(Math.random() * COLORS.length)],
+        });
+      }
+    }
+    function frame() {
+      ctx.clearRect(0, 0, w, h);
+      for (const p of particles) {
+        p.y -= p.speed; p.x += p.drift;
+        if (p.y < -4) { p.y = h + 4; p.x = Math.random() * w; }
+        if (p.x < -4) p.x = w + 4;
+        if (p.x > w + 4) p.x = -4;
+        p.opacity += p.opacityDir * p.opacitySpeed;
+        if (p.opacity > 0.95) { p.opacity = 0.95; p.opacityDir = -1; }
+        if (p.opacity < 0.12) { p.opacity = 0.12; p.opacityDir = 1; }
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${p.color}, ${p.opacity})`;
+        ctx.fill();
+      }
+      rafId = requestAnimationFrame(frame);
+    }
+    function start() { if (!running) { running = true; resize(); frame(); } }
+    function stop() { if (running) { running = false; cancelAnimationFrame(rafId); } }
+    window.addEventListener('resize', () => { if (running) resize(); }, { passive: true });
+    return { start, stop };
+  }
+
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.bg-sparkles').forEach(canvas => {
+      const s = initSparkles(canvas);
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => e.isIntersecting ? s.start() : s.stop());
+      }, { threshold: 0.05 });
+      obs.observe(canvas);
+    });
+  }
+</script>
+
+</body>
+</html>
